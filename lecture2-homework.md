@@ -159,7 +159,19 @@ template QuinSelector(choices) {
 }
 
 ## IsNegative
+template IsNegative() {
+    signal input in;
+    signal output out;
 
+    var p = 21888242871839275222246405745257275088548364400416034343698204186575808495617;
+    // (p - 1) \ 2 = 10944121435919637611123202872628637544274182200208017171849102093287904247808
+    component num2bits = Num2Bits(254);
+    component compconstant = CompConstant((p - 1) \ 2);
+    num2bits.in <== in;
+    compconstant.in <== num2bits.out; 
+    out <== compconstant.out;
+
+}
 
 ## LessThan
 pragma circom 2.1.4;
